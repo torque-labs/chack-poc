@@ -4,11 +4,12 @@
 
 import { VStack, Text, HStack,  } from '@chakra-ui/react';
 import { AppHero } from '../ui/ui-layout';
-import OfferTable from './offer-table';
+import OfferTab from './offer-tab';
 import { Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react'
 import Footer from './footer';
 import { WalletButton } from '../solana/solana-provider';
 import { ClusterUiSelect } from '../cluster/cluster-ui';
+import AudianceTab from './audiance-tab';
 
 export default function Home() {
   return (
@@ -27,19 +28,19 @@ export default function Home() {
             }}
         >Onnyx</Text>
         <Text fontSize={'xl'}>Web3 User Data Hub</Text>
-        <Tabs width={'400px'} paddingBottom={'14'} variant='enclosed' >
+        <Tabs width={'400px'} paddingBottom={'14'} variant='enclosed'>
             <TabList justifyContent={'space-evenly'}>
                 <Tab _selected={{ color: 'white', bg: '#641ae6' }}>User Analysis</Tab>
                 <Tab _selected={{ color: 'white', bg: '#641ae6' }}>Offers</Tab>
                 <Tab _selected={{ color: 'white', bg: '#641ae6' }}>About Onnyx</Tab>
             </TabList>
 
-            <TabPanels>
+            <TabPanels >
                 <TabPanel>
-                    <p>Audiances</p>
+                    <AudianceTab />
                 </TabPanel>
                 <TabPanel>
-                    <OfferTable />
+                    <OfferTab />
                 </TabPanel>
                 <TabPanel>
                     <p>About</p>
