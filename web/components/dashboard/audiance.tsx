@@ -7,7 +7,7 @@ export default function Audiance({label, image, copy}:any) {
             direction={{ base: 'row', sm: 'row' }}
             overflow='hidden'
             border={'1px solid #14F195'}
-            width={'350px'}
+            width={'320px'}
             height={'150px'}
         >
             <Image

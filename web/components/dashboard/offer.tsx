@@ -7,7 +7,8 @@ export default function Offer({label, link, image, copy}:any) {
             overflow='hidden'
             variant='outline'
             border={'1px solid #14F195'}
-            height={'400px'}
+            height={'470px'}
+            padding={2}
         >
             <CardBody width='300px'>
                 <Image

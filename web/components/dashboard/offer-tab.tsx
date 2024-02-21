@@ -26,12 +26,35 @@ const campaigns: { label: string, link: string, image: string, copy: string }[] 
   }
 ];
 
-export default function OfferTab() {
+// todo move this to a better file location
+export const scrollerStyle = {
+  '&::-webkit-scrollbar': {
+    width: '4px',
+    borderRadius: '8px',
+    backgroundColor: `#14F195`,
+    scrollbarWidth: 'auto'
+  },
+  '&::-webkit-scrollbar-thumb': {
+    width: '4px',
+    borderRadius: '8px',
+    backgroundColor: `#9945FF`,
+    scrollbarWidth: 'auto'
+  },
+}
+
+export default function OfferTab({isMobile}:any) {
   // TODO state management for offers
   return (
-      <HStack overflowX="scroll" width={"385px"} spacing={8}>
+      <HStack 
+        overflowX="scroll" 
+        spacing={5} 
+        paddingX={10}
+        paddingY={10}
+        justifyContent={'space-between'}
+        sx={scrollerStyle}
+      >
         {campaigns.map(({ label, link, image, copy }) => (
-          <Box width={'380px'}>
+          <Box width={'330px'}>
             <Offer label={label} link={link} image={image} copy={copy}/>
           </Box>
         ))}

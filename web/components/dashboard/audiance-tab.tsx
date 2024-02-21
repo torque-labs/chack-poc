@@ -1,10 +1,8 @@
 'use client';
 
-import { Box, HStack, VStack } from '@chakra-ui/react';
-import { AppHero } from '../ui/ui-layout';
-import { ExternalLinkIcon } from '@chakra-ui/icons';
-import Offer from './offer';
+import { Box, Button, Stack, VStack } from '@chakra-ui/react';
 import Audiance from './audiance';
+import { scrollerStyle } from './offer-tab';
 
 const audiances:any[] = [
   { 
@@ -24,15 +22,29 @@ const audiances:any[] = [
   }
 ];
 
-export default function AudianceTab() {
+export default function AudianceTab({isMobile}:any) {
   // TODO state management for user's audiances
   return (
-      <VStack overflowY="scroll" height={"450px"} spacing={8}>
-        {audiances.map(({ label, image, copy }) => (
-          <Box >
-            <Audiance label={label} image={image} copy={copy}/>
-          </Box>
-        ))}
+      <VStack>
+        <Stack 
+          direction={isMobile ? 'column' : 'row'} 
+          overflowX={isMobile ? 'hidden' : 'scroll' }
+          overflowY={isMobile ? "scroll" : 'hidden' }
+          spacing={4} 
+          sx={scrollerStyle}
+          justifyContent={'space-between'}
+          padding={5}
+          paddingLeft={isMobile ? 10 : 0}
+        >
+          {audiances.map(({ label, image, copy }) => (
+            <Box >
+              <Audiance label={label} image={image} copy={copy}/>
+            </Box>
+          ))}
+        </Stack>
+        <Button onClick={() => alert('todo')}>
+          Share on X
+        </Button>
       </VStack>
   );
 }
