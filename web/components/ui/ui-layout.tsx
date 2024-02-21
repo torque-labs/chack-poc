@@ -1,35 +1,28 @@
 'use client';
 
 import { WalletButton } from '../solana/solana-provider';
+
+import { extendTheme, ThemeConfig } from '@chakra-ui/react';
+
 import * as React from 'react';
-import { ReactNode, Suspense, useEffect, useRef } from 'react';
+import { ReactNode, useEffect, useRef } from 'react';
 
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-
-import { AccountChecker } from '../account/account-ui';
-import {
-  ClusterChecker,
-  ClusterUiSelect,
-  ExplorerLink,
-} from '../cluster/cluster-ui';
-import toast, { Toaster } from 'react-hot-toast';
-import { ChakraProvider, HStack } from '@chakra-ui/react';
+import { ExplorerLink } from '../cluster/cluster-ui';
+import toast from 'react-hot-toast';
+import { ChakraProvider } from '@chakra-ui/react';
 import Home from '../dashboard/home';
 
-const pages: { label: string; path: string }[] = [
-  { label: 'Account', path: '/account' },
-  { label: 'Clusters', path: '/clusters' },
-];
+const config: ThemeConfig = {
+  initialColorMode: 'dark',
+  useSystemColorMode: false,
+};
+
+const theme = extendTheme({ config });
 
 export function UiLayout({ children }: { children: ReactNode }) {
-  const pathname = usePathname();
-
   return (
-    <ChakraProvider>
-      
-       <Home />
-
+    <ChakraProvider theme={theme}>
+      <Home />
     </ChakraProvider>
   );
 }

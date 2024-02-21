@@ -5,7 +5,20 @@ import { IconTrash } from '@tabler/icons-react';
 import { useQuery } from '@tanstack/react-query';
 import { ReactNode, useState } from 'react';
 import { AppModal } from '../ui/ui-layout';
-import { ClusterNetwork, useCluster } from './cluster-data-access';
+import { ClusterNetwork } from './cluster-data-access';
+import {
+  Button,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList,
+  useBreakpointValue,
+  Box,
+  Icon,
+  color,
+} from '@chakra-ui/react';
+import { SettingsIcon, CheckIcon } from '@chakra-ui/icons';
+import { useCluster } from './cluster-data-access';
 
 export function ExplorerLink({
   path,
@@ -60,30 +73,40 @@ export function ClusterChecker({ children }: { children: ReactNode }) {
 }
 
 export function ClusterUiSelect() {
-  const { clusters, setCluster, cluster } = useCluster();
+  const { clusters, cluster: selectedCluster, setCluster } = useCluster();
+  const displayMode = useBreakpointValue({ base: 'mobile', md: 'desktop' });
+
   return (
-    <div className="dropdown dropdown-end">
-      <label tabIndex={0} className="btn btn-primary rounded-btn">
-        {cluster.name}
-      </label>
-      <ul
-        tabIndex={0}
-        className="menu dropdown-content z-[1] p-2 shadow bg-base-100 rounded-box w-52 mt-4"
+    <Menu>
+      <MenuButton
+        as={Button}
+        variant="solid"
+        backgroundColor="#641ae6"
+        color="white"
+        size="lg"
+        _hover={{ bg: '#641ae6' }}
       >
-        {clusters.map((item) => (
-          <li key={item.name}>
-            <button
-              className={`btn btn-sm ${
-                item.active ? 'btn-primary' : 'btn-ghost'
-              }`}
-              onClick={() => setCluster(item)}
-            >
-              {item.name}
-            </button>
-          </li>
+        {displayMode === 'mobile' ? (
+          <Box as={SettingsIcon} />
+        ) : (
+          selectedCluster.name
+        )}
+      </MenuButton>
+      <MenuList>
+        {clusters.map((cluster) => (
+          <MenuItem key={cluster.name} onClick={() => setCluster(cluster)}>
+            {cluster.name === selectedCluster.name ? (
+              <Box display="flex" alignItems="center">
+                {cluster.name}
+                <CheckIcon color="purple.500" marginRight="2" />
+              </Box>
+            ) : (
+              cluster.name
+            )}
+          </MenuItem>
         ))}
-      </ul>
-    </div>
+      </MenuList>
+    </Menu>
   );
 }
 
