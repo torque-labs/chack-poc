@@ -1,6 +1,16 @@
 import { Card, CardHeader, CardBody, CardFooter, Stack, Heading, Text, Divider, Button, Image } from '@chakra-ui/react'
+import { useWallet } from '@solana/wallet-adapter-react';
+import { sendEvent } from '../lib/onnyx-backend';
 
-export default function Offer({label, link, image, copy}:any) {
+export default function Offer({label, link, image, copy, id, siws}:any) {
+    const wallet = useWallet();
+    const clickOffer = async () => {
+        if (!wallet.publicKey || !wallet.connected) {
+            alert('wallet not connected');
+            return;
+        }
+        await sendEvent(wallet?.publicKey?.toString(), id, 'publisherKey', siws);
+    };
     
     return (
         <Card 
@@ -29,7 +39,7 @@ export default function Offer({label, link, image, copy}:any) {
                     target="_blank"
                     rel="noopener noreferrer"
                 >
-                    <Button variant='solid' colorScheme='blue'>
+                    <Button variant='solid' colorScheme='blue' onClick={clickOffer}>
                         Explore Offer
                     </Button>
                 </a>

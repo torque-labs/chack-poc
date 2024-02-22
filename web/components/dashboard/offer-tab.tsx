@@ -6,6 +6,7 @@ import React, { useState } from 'react';
 import Offer from './offer';
 
 const campaigns: {
+  id: string;
   label: string;
   link: string;
   image: string;
@@ -13,6 +14,7 @@ const campaigns: {
   offersRemaining: number;
 }[] = [
   {
+    id: 'Tensor Marketplace',
     label: 'Tensor Marketplace',
     link: 'https://www.tensor.trade/',
     image:
@@ -21,6 +23,7 @@ const campaigns: {
     offersRemaining: 50,
   },
   {
+    id: 'GenesysGo',
     label: 'GenesysGo',
     link: 'https://t.co/g8tGFfe5Qg',
     image:
@@ -29,6 +32,7 @@ const campaigns: {
     offersRemaining: 50,
   },
   {
+    id: 'Solarplex',
     label: 'Solarplex',
     link: 'https://t.co/l4Ts47ECJN',
     image: 'https://pbs.twimg.com/media/GGUm7x-bMAEbik_?format=jpg&name=small',
@@ -52,7 +56,7 @@ export const scrollerStyle = {
   },
 };
 
-export default function OfferTab() {
+export default function OfferTab({siws}:any) {
   const [currentOfferIndex, setCurrentOfferIndex] = useState(0);
 
   const nextOffer = () => {
@@ -87,7 +91,7 @@ export default function OfferTab() {
         </Button>
       )}
       <Box width={offerSize} minHeight="200px">
-        <Offer {...campaigns[currentOfferIndex]} />
+        <Offer {...campaigns[currentOfferIndex]} siws={siws}/>
       </Box>
       {!isMobile && (
         <Button

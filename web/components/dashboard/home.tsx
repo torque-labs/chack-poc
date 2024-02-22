@@ -9,9 +9,27 @@ import { ClusterUiSelect } from '../cluster/cluster-ui';
 import AudianceTab from './audiance-tab';
 import { useWallet } from '@solana/wallet-adapter-react';
 import { useEffect, useState } from 'react';
+import { getOffers, identify } from '../lib/onnyx-backend';
 
 export default function Home() {
+  // wallet
   const wallet = useWallet();
+  const [identifyPayload, setIdentifyPayload] = useState({}); // can potentially remove
+  const [siws, setSiws] = useState({});
+  const [offers, setOffers] = useState([]);
+  useEffect(() => {
+    (async () => {
+        if (!wallet.publicKey || !wallet.connected) {return;}
+        const {data:{payload: input}} = await identify();
+        const output = await wallet!.signIn(input);
+        setSiws({input, output})
+        const os = await getOffers(wallet.publicKey.toString());
+        console.log({os});
+        setOffers(os);
+    })();
+  }, [wallet?.connected]);
+
+  // responsive UI
   const [isMobile, setIsMobile] = useState(false);
   const [tabXY, setTabXY] = useState(['1200px', '1200px']);
   useEffect(() => {
@@ -102,7 +120,7 @@ export default function Home() {
               <AudianceTab isMobile={isMobile} />
             </TabPanel>
             <TabPanel height={tabXY[0]} width={tabXY[1]}>
-              <OfferTab isMobile={isMobile} />
+              <OfferTab isMobile={isMobile} siws={siws}/>
             </TabPanel>
           </TabPanels>
         </Tabs>
