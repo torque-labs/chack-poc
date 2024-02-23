@@ -1,4 +1,4 @@
-
+import { SolanaSignInOutput } from "@solana/wallet-standard-features";
 
 export const API_URI = 'http://onnyx-server-env-1.eba-rwuxjvp2.us-east-1.elasticbeanstalk.com';
 
@@ -10,14 +10,26 @@ export const sendEvent = async (userKey: string, campaignId: string, publisherKe
     if (!siws.input || !siws.output) {
         throw 'Not signed in';
     }
+    const serialisedOutput: SolanaSignInOutput = {
+        account: {
+            ...siws.output.account,
+            publicKey: Array.from(
+                new Uint8Array(siws.output.account.publicKey)
+            ),
+        },
+        signature: new Uint8Array(siws.output.signature),
+        signedMessage: new Uint8Array(siws.output.signedMessage),
+    };
+    console.log({serialisedOutput})
     return fetch(`${API_URI}/events`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
             userKey,
+            type: 'click',
             campaignId, 
             publisherKey, 
-            signature: {input: JSON.stringify(siws.input), output: JSON.stringify(siws.output)}
+            signature: {input: siws.input, output: serialisedOutput}
         })
     }).then(x => x.json());
 }

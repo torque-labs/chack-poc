@@ -24,7 +24,6 @@ export default function Home() {
         const output = await wallet!.signIn(input);
         setSiws({input, output})
         const os = await getOffers(wallet.publicKey.toString());
-        console.log({os});
         setOffers(os);
     })();
   }, [wallet?.connected]);
