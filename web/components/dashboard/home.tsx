@@ -114,7 +114,7 @@ export default function Home() {
             <Tabs variant="enclosed" height={'100%'} width={'100%'}>
             <TabList justifyContent={'space-around'}>
                 <Tab _selected={{ color: 'white', bg: '#641ae6' }}>
-                User Analysis
+                Audiences
                 </Tab>
                 <Tab _selected={{ color: 'white', bg: '#641ae6' }}>Offers</Tab>
             </TabList>

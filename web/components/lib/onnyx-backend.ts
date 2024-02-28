@@ -6,7 +6,7 @@ export const identify = async () => {
     return fetch(`${API_URI}/identify`).then(x => x.json());
 }
 
-export const sendEvent = async (userKey: string, campaignId: string, publisherKey: string, siws: any) => {
+export const sendEvent = async (pubKey: string, campaignId: string, publisherKey: string, siws: any) => {
     if (!siws.input || !siws.output) {
         throw 'Not signed in';
     }
@@ -25,10 +25,10 @@ export const sendEvent = async (userKey: string, campaignId: string, publisherKe
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-            userKey,
+            pubKey,
             type: 'click',
             campaignId, 
-            publisherKey, 
+            publisherKey: "CeEHBgVUcgtuo3zWb5casJ5XtiHcvMY2YobFBjLFKwKy", // hard coded for cHack
             signature: {input: siws.input, output: serialisedOutput}
         })
     }).then(x => x.json());
