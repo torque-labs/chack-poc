@@ -1,6 +1,6 @@
 import { Card, HStack, CardBody, CardFooter, Stack, Heading, Text, Divider, Button, Image } from '@chakra-ui/react'
 
-export default function Audiance({label, image, copy, teir}:any) {
+export default function Audience({label, image, copy, teir}:any) {
     function getTeirColor(teir: number) {
         if (teir == 1) {
             return 'skyblue'

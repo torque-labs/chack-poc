@@ -6,10 +6,10 @@ import { Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react';
 import Footer from './footer';
 import { WalletButton } from '../solana/solana-provider';
 import { ClusterUiSelect } from '../cluster/cluster-ui';
-import AudianceTab from './audiance-tab';
+import AudienceTab from './audience-tab';
 import { useWallet } from '@solana/wallet-adapter-react';
 import { useEffect, useState } from 'react';
-import { getAudiences, getOffers, identify } from '../lib/onnyx-backend';
+import { getUserData, identify } from '../lib/onnyx-backend';
 
 export default function Home() {
   // wallet
@@ -18,7 +18,6 @@ export default function Home() {
   const [siws, setSiws] = useState({});
   const [offers, setOffers] = useState([]);
   const [audiences, setAudiences] = useState([]);
-  // loading
   const [fetching, setFetching] = useState(false);
   useEffect(() => {
     (async () => {
@@ -27,11 +26,12 @@ export default function Home() {
         const {data:{payload: input}} = await identify();
         const output = await wallet!.signIn(input);
         setSiws({input, output})
-        const auds = await getAudiences(wallet.publicKey.toString())
-        setAudiences(auds);
-        console.log({auds});
-        // const os = await getOffers(wallet.publicKey.toString());
-        // setOffers(os);
+        // const auds = await getAudiences(wallet.publicKey.toString())
+        const userData = await getUserData(wallet.publicKey.toString());
+        console.log({userData});
+        setAudiences(userData.audiences);
+        setOffers(userData.offers);
+        
         setFetching(false);
     })();
   }, [wallet?.connected, (wallet.publicKey?.toString() + wallet.connected.toString())]);
@@ -47,7 +47,7 @@ export default function Home() {
   const updateDimensions = () => {
     const iw = window.innerWidth;
     setIsMobile(iw < 850);
-    setTabXY(iw < 850 ? ['375px', '450px'] : ['1000px', '1000px']);
+    setTabXY(iw < 850 ? ['375px', '100%'] : ['1000px', '1000px']);
   };
 
   const layout = useBreakpointValue({ base: 'mobile', md: 'desktop' });
@@ -56,7 +56,7 @@ export default function Home() {
     <VStack
       paddingY={3}
       spacing={4}
-      maxWidth={isMobile ? '414px' : '100%'}
+      maxWidth={'100vw'}
       margin="auto"
       pb={2}
     >
@@ -82,10 +82,7 @@ export default function Home() {
                 </Text>
                 <Text fontSize={'xl'}>Web3 User Data Hub</Text>
             </Flex>
-            <Flex gap={4}>
-                <WalletButton />
-                <ClusterUiSelect />
-            </Flex>
+            <WalletButton />
             </Flex>
         ) : (
             <>
@@ -114,8 +111,8 @@ export default function Home() {
             </>
         )}
         {wallet.publicKey && (
-            <Tabs variant="enclosed" height={'100%'}>
-            <TabList justifyContent={isMobile ? 'space-evenly' : 'center'}>
+            <Tabs variant="enclosed" height={'100%'} width={'100%'}>
+            <TabList justifyContent={'space-around'}>
                 <Tab _selected={{ color: 'white', bg: '#641ae6' }}>
                 User Analysis
                 </Tab>
@@ -123,12 +120,16 @@ export default function Home() {
             </TabList>
 
             <TabPanels>
-                <TabPanel height={tabXY[0]} width={tabXY[1]}>
-                    <AudianceTab isMobile={isMobile} audiences={audiences} fetching={fetching}/>
-                </TabPanel>
-                <TabPanel height={tabXY[0]} width={tabXY[1]}>
-                    <OfferTab isMobile={isMobile} siws={siws} fetching={fetching}/>
-                </TabPanel>
+                <VStack>
+                    <TabPanel height={tabXY[0]} width={tabXY[1]} >
+                        <AudienceTab isMobile={isMobile} audiences={audiences} fetching={fetching}/>
+                    </TabPanel>
+                </VStack>
+                <VStack>
+                    <TabPanel height={tabXY[0]} width={tabXY[1]} >
+                        <OfferTab isMobile={isMobile} siws={siws} fetching={fetching} offers={offers}/>
+                    </TabPanel>
+                </VStack>
             </TabPanels>
             </Tabs>
         )}

@@ -56,16 +56,18 @@ export const scrollerStyle = {
   },
 };
 
-export default function OfferTab({siws, fetching}:any) {
+export default function OfferTab({siws, fetching, offers}:any) {
   const [currentOfferIndex, setCurrentOfferIndex] = useState(0);
 
   const nextOffer = () => {
-    setCurrentOfferIndex((prevIndex) => (prevIndex + 1) % campaigns.length);
+    if (offers.length <= 1) {return;}
+    setCurrentOfferIndex((prevIndex) => (prevIndex + 1) % offers.length);
   };
 
   const prevOffer = () => {
+    if (offers.length <= 1) {return;}
     setCurrentOfferIndex(
-      (prevIndex) => (prevIndex - 1 + campaigns.length) % campaigns.length
+      (prevIndex) => (prevIndex - 1 + offers.length) % offers.length
     );
   };
 
@@ -81,11 +83,9 @@ export default function OfferTab({siws, fetching}:any) {
       direction={isMobile ? 'column' : 'row'}
       align="center"
       justify="center"
-      paddingX={2}
-      paddingY={10}
       sx={scrollerStyle}
     >
-      {!isMobile && (
+      {offers?.length > 0 && !isMobile && (
         <Button
           onClick={prevOffer}
           leftIcon={<ChevronLeftIcon />}
@@ -94,10 +94,10 @@ export default function OfferTab({siws, fetching}:any) {
           Prev
         </Button>
       )}
-      <Box width={offerSize} minHeight="200px">
-        <Offer {...campaigns[currentOfferIndex]} siws={siws}/>
-      </Box>
-      {!isMobile && (
+      {offers?.length > 0 && 
+        <Offer {...offers[currentOfferIndex]} siws={siws}/>
+      }
+      {offers?.length > 0 && !isMobile && (
         <Button
           onClick={nextOffer}
           rightIcon={<ChevronRightIcon />}
@@ -106,8 +106,8 @@ export default function OfferTab({siws, fetching}:any) {
           Next
         </Button>
       )}
-      {isMobile && (
-        <Flex width="100%" justifyContent="center" pt={4}>
+      {offers?.length > 0 && isMobile && (
+        <Flex width="100%" justifyContent="center" >
           <Button
             onClick={prevOffer}
             leftIcon={<ChevronLeftIcon />}
@@ -124,6 +124,9 @@ export default function OfferTab({siws, fetching}:any) {
           </Button>
         </Flex>
       )}
+      {offers?.length === 0 &&
+        <p>Your wallet does qualify for any offers :(</p>
+      }
     </Flex>
   );
 }

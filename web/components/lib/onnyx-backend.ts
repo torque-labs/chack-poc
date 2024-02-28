@@ -34,10 +34,16 @@ export const sendEvent = async (userKey: string, campaignId: string, publisherKe
     }).then(x => x.json());
 }
 
-export const getOffers = async (userKey: string) => {
-    return await fetch(`${API_URI}/offers?userKey=${userKey}`).then(x => x.json());
+export const getOffers = async (pubKey: string) => {
+    return await fetch(`${API_URI}/offers?pubKey=${pubKey}`).then(x => x.json());
 }
-export const getAudiences = async (userKey: string) => {
-    const resp = await fetch(`${API_URI}/audiences?userKey=${userKey}`).then(x => x.json());
+export const getAudiences = async (pubKey: string) => {
+    const resp = await fetch(`${API_URI}/audiences?pubKey=${pubKey}`).then(x => x.json());
+    console.log(resp)
     return resp.data.audiences;
+}
+export const getUserData = async (pubKey: string) => {
+    const resp = await fetch(`${API_URI}/users?pubKey=${pubKey}`).then(x => x.json());
+    console.log(resp);
+    return resp.data;
 }
