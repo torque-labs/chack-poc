@@ -1,6 +1,6 @@
 import { SolanaSignInOutput } from "@solana/wallet-standard-features";
 
-export const API_URI = 'http://onnyx-server-env-1.eba-rwuxjvp2.us-east-1.elasticbeanstalk.com'; //'http://localhost:3000'; //
+export const API_URI = 'https://api.onnyx.io'; //'http://localhost:3000'; //
 
 export const identify = async () => {
     return fetch(`${API_URI}/identify`).then(x => x.json());
