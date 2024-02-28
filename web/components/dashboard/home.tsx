@@ -140,11 +140,9 @@ export default function Home() {
         width="full"
       >
         {!wallet.publicKey &&
-            <VStack>
-                <p>TODO: SPLASH SCREEEN</p>
-                <Box height={'400px'} width={'400px'}>
-                    <img src={'NFT_degen.png'} alt="yiuh"/>
-                </Box>
+            <VStack paddingTop={15}>
+                <Text fontSize={'6xl'}><b><i>Onnyx</i></b></Text>
+                <Text fontSize={'2xl'}>Solana's User Data Layer</Text>
             </VStack>
         }
         <Footer />

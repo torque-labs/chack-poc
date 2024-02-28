@@ -23,8 +23,8 @@ export const SimpleFooter: React.FC = () => {
         <HStack padding={5} spacing={4}>
           <Heading size="md">Onnyx Labs</Heading>
           <HStack spacing={1}>
-            <IconButton aria-label="Twitter" icon={<SiTwitter />}></IconButton>
-            <IconButton aria-label="Github" icon={<SiGithub />}></IconButton>
+            <a href={'https://twitter.com/onnyxprotocol'} target='_blank'><IconButton aria-label="Twitter" icon={<SiTwitter />}></IconButton></a>
+            <a href={'https://github.com/onnyx-labs'} target='_blank'><IconButton aria-label="Github" icon={<SiGithub />}></IconButton></a>
           </HStack>
         </HStack>
       </VStack>

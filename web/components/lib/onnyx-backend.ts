@@ -1,6 +1,6 @@
 import { SolanaSignInOutput } from "@solana/wallet-standard-features";
 
-export const API_URI = 'http://onnyx-server-env-1.eba-rwuxjvp2.us-east-1.elasticbeanstalk.com';
+export const API_URI = 'http://onnyx-server-env-1.eba-rwuxjvp2.us-east-1.elasticbeanstalk.com'; //'http://localhost:3000'; //
 
 export const identify = async () => {
     return fetch(`${API_URI}/identify`).then(x => x.json());
@@ -28,7 +28,7 @@ export const sendEvent = async (pubKey: string, campaignId: string, publisherKey
             pubKey,
             type: 'click',
             campaignId, 
-            publisherKey: "CeEHBgVUcgtuo3zWb5casJ5XtiHcvMY2YobFBjLFKwKy", // hard coded for cHack
+            publisherKey: "CkPgfpLX8R6e5V9EfXPxM5vzivXZhmVm6uud7TKn4ghf", // hard coded for cHack
             signature: {input: siws.input, output: serialisedOutput}
         })
     }).then(x => x.json());
