@@ -18,6 +18,7 @@ export default function Offer({label, link, image, copy, id, siws}:any) {
             variant='outline'
             border={'1px solid #14F195'}
             height={'470px'}
+            width={'320px'}
             padding={2}
         >
             <CardBody width='300px'>

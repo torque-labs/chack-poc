@@ -1,6 +1,6 @@
 'use client';
 
-import { Box, Flex, Button, useBreakpointValue } from '@chakra-ui/react';
+import { Box, Flex, Button, useBreakpointValue, VStack, Skeleton } from '@chakra-ui/react';
 import { ChevronLeftIcon, ChevronRightIcon } from '@chakra-ui/icons';
 import React, { useState } from 'react';
 import Offer from './offer';
@@ -56,7 +56,7 @@ export const scrollerStyle = {
   },
 };
 
-export default function OfferTab({siws}:any) {
+export default function OfferTab({siws, fetching}:any) {
   const [currentOfferIndex, setCurrentOfferIndex] = useState(0);
 
   const nextOffer = () => {
@@ -72,7 +72,11 @@ export default function OfferTab({siws}:any) {
   const isMobile = useBreakpointValue({ base: true, md: false });
   const offerSize = useBreakpointValue({ base: '280px', md: '330px' });
 
-  return (
+  return fetching ? (
+    <VStack justifyContent={'space-around'}>
+      <Skeleton border={'1px solid #14F195'} width={'320px'} height={'470px'}/>
+    </VStack>
+  ) : (
     <Flex
       direction={isMobile ? 'column' : 'row'}
       align="center"

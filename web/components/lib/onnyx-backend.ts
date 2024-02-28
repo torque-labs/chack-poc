@@ -37,3 +37,7 @@ export const sendEvent = async (userKey: string, campaignId: string, publisherKe
 export const getOffers = async (userKey: string) => {
     return await fetch(`${API_URI}/offers?userKey=${userKey}`).then(x => x.json());
 }
+export const getAudiences = async (userKey: string) => {
+    const resp = await fetch(`${API_URI}/audiences?userKey=${userKey}`).then(x => x.json());
+    return resp.data.audiences;
+}
