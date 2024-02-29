@@ -14,7 +14,7 @@ import { getUserData, identify } from '../lib/onnyx-backend';
 export default function Home() {
   // wallet
   const wallet = useWallet();
-  const [identifyPayload, setIdentifyPayload] = useState({}); // can potentially remove
+  const [identifyPayload, setIdentifyPayload] = useState({}); // can potentially remove 
   const [siws, setSiws] = useState({});
   const [offers, setOffers] = useState([]);
   const [audiences, setAudiences] = useState([]);
