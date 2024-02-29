@@ -6,24 +6,6 @@ import { scrollerStyle } from './offer-tab';
 import { useEffect } from 'react';
 import TweetButton from './TweetButton';
 
-const audienceMap: any = {
-  UTILITY_TOKEN: {
-    label: 'Utility Holder',
-    image: '/NFT_degen.png',
-    copy: 'WEN UTILITY!! You hold utiliy tokens for projects in Solana\'s ecosystem.',
-  },
-  MEME_COIN: {
-    label: 'Meme Coiner',
-    image: '/shit_coiner.png',
-    copy: 'DEGEN ALERT! You love your meme coins!',
-  },
-  BLUE_CHIP_NFT: {
-    label: 'Blue Chip NFT Holder',
-    image: '/blue_chip.png',
-    copy: 'You hold Blue Chip NFTs.',
-  },
-};
-
 function createAudienceCard(audience: any) {
   const [id, teir] = audience.id.split(':');
   return (
@@ -52,6 +34,8 @@ export default function AudienceTab({ isMobile, audiences, fetching }: any) {
       <VStack>
         {audiences?.length &&
           <Stack
+            maxH={'530px'}
+            maxW={'1000px'}
             direction={isMobile ? 'column' : 'row'}
             overflowX={isMobile ? 'hidden' : 'scroll'}
             overflowY={isMobile ? 'scroll' : 'hidden'}
