@@ -1,5 +1,6 @@
 'use client';
 
+<<<<<<< HEAD
 import {
   VStack,
   Text,
@@ -8,11 +9,14 @@ import {
   Box,
   Skeleton,
 } from '@chakra-ui/react';
+=======
+import { VStack, Text, Flex, useBreakpointValue, Box } from '@chakra-ui/react';
+>>>>>>> 8a8cbe8 (Add function for basic signature)
 import OfferTab from './offer-tab';
 import { Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react';
 import SimpleFooter from './footer';
 import { WalletButton } from '../solana/solana-provider';
-import { ClusterUiSelect } from '../cluster/cluster-ui';
+
 import AudienceTab from './audience-tab';
 import { useWallet } from '@solana/wallet-adapter-react';
 import { useEffect, useState } from 'react';
@@ -21,7 +25,6 @@ import { getUserData, identify } from '../lib/onnyx-backend';
 export default function Home() {
   // wallet
   const wallet = useWallet();
-  const [identifyPayload, setIdentifyPayload] = useState({}); // can potentially remove
   const [siws, setSiws] = useState({});
   const [offers, setOffers] = useState([]);
   const [audiences, setAudiences] = useState([]);
@@ -32,10 +35,14 @@ export default function Home() {
         return;
       }
       setFetching(true);
+
+
       const {
         data: { payload: input },
       } = await identify();
+
       const output = await wallet!.signIn!(input);
+
       setSiws({ input, output });
       // const auds = await getAudiences(wallet.publicKey.toString())
       const userData = await getUserData(wallet.publicKey.toString());
@@ -45,10 +52,7 @@ export default function Home() {
 
       setFetching(false);
     })();
-  }, [
-    wallet?.connected,
-    wallet.publicKey?.toString() + wallet.connected.toString(),
-  ]);
+  }, [wallet]);
 
   // responsive UI
   const [isMobile, setIsMobile] = useState(false);
