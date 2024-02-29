@@ -17,7 +17,7 @@ const TweetButton = ({audiences}) => {
   };
 
   return (
-    <Button backgroundColor={'#641ae6'} onClick={handleTweet}>Share on X</Button>
+    <Button backgroundColor={'#641ae6'} color="white" onClick={handleTweet}>Share on X</Button>
   );
 };
 
