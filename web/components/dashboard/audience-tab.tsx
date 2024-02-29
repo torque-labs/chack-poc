@@ -24,11 +24,11 @@ const audienceMap: any = {
   },
 };
 
-function createAudienceCard(audiacneId: string) {
-  const [id, teir] = audiacneId.split(':');
+function createAudienceCard(audience: any) {
+  const [id, teir] = audience.id.split(':');
   return (
-    <Box key={audiacneId}>
-      <Audience label={audienceMap[id].label} image={audienceMap[id].image} copy={audienceMap[id].copy} teir={teir}/>
+    <Box key={audience.id}>
+      <Audience label={audience.title} image={audience.imageUrl} copy={audience.copy} teir={teir}/>
     </Box>
   )
 }
@@ -61,7 +61,7 @@ export default function AudienceTab({ isMobile, audiences, fetching }: any) {
             padding={5}
             // paddingLeft={isMobile ? 10 : 0}
           >
-            {audiences.map((aud: any) => createAudienceCard(aud.id))}
+            {audiences.map((aud: any) => createAudienceCard(aud))}
           </Stack>
         }
         {/* <Button onClick={() => alert('todo')}>Share on X</Button> */}

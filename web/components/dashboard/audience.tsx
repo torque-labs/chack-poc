@@ -29,9 +29,9 @@ export default function Audience({label, image, copy, teir}:any) {
                 <CardBody>
                 <Heading size='sm'>{label}</Heading>
                     
-                <Text py='2'>
+                {copy && <Text py='2'>
                     {copy}
-                </Text>
+                </Text>}
 
                 {teir && <Heading size='sm' textColor={getTeirColor(teir)}>{'LVL: ' + teir}</Heading>}
                 </CardBody>

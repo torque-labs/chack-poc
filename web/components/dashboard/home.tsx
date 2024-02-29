@@ -24,7 +24,7 @@ export default function Home() {
         if (!wallet || !wallet.publicKey || !wallet.connected) {return;}
         setFetching(true);
         const {data:{payload: input}} = await identify();
-        const output = await wallet!.signIn(input);
+        const output = await wallet!.signIn!(input);
         setSiws({input, output})
         // const auds = await getAudiences(wallet.publicKey.toString())
         const userData = await getUserData(wallet.publicKey.toString());
