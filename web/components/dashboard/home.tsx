@@ -53,7 +53,10 @@ export default function Home() {
 
       setFetching(false);
     })();
-  }, [wallet]);
+  }, [
+    wallet?.connected,
+    wallet.publicKey?.toString() + wallet.connected.toString(),
+  ]);
 
   // responsive UI
   const [isMobile, setIsMobile] = useState(false);
