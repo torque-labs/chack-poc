@@ -1,17 +1,6 @@
 'use client';
 
-<<<<<<< HEAD
-import {
-  VStack,
-  Text,
-  Flex,
-  useBreakpointValue,
-  Box,
-  Skeleton,
-} from '@chakra-ui/react';
-=======
 import { VStack, Text, Flex, useBreakpointValue, Box } from '@chakra-ui/react';
->>>>>>> 8a8cbe8 (Add function for basic signature)
 import OfferTab from './offer-tab';
 import { Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react';
 import SimpleFooter from './footer';
@@ -20,7 +9,7 @@ import { WalletButton } from '../solana/solana-provider';
 import AudienceTab from './audience-tab';
 import { useWallet } from '@solana/wallet-adapter-react';
 import { useEffect, useState } from 'react';
-import { getUserData, identify } from '../lib/onnyx-backend';
+import { getUserData, identify, signMessage } from '../lib/onnyx-backend';
 
 export default function Home() {
   // wallet
@@ -29,6 +18,8 @@ export default function Home() {
   const [offers, setOffers] = useState([]);
   const [audiences, setAudiences] = useState([]);
   const [fetching, setFetching] = useState(false);
+  const [authType, setAuthType] = useState('siws');
+
   useEffect(() => {
     (async () => {
       if (!wallet || !wallet.publicKey || !wallet.connected) {
@@ -36,17 +27,27 @@ export default function Home() {
       }
       setFetching(true);
 
+      if (wallet.signIn) {
+        const {
+          data: { payload: input },
+        } = await identify();
 
-      const {
-        data: { payload: input },
-      } = await identify();
+        const output = await wallet.signIn!(input);
 
-      const output = await wallet!.signIn!(input);
+        setSiws({ input, output });
+      } else if (wallet.signMessage) {
+        setAuthType('basic');
 
-      setSiws({ input, output });
-      // const auds = await getAudiences(wallet.publicKey.toString())
+        const payload =
+          'Is this you? PROVE IT! This request will not trigger any blockchain transaction or cost any gas fee. (@Vidor - Plz implement SIWS, thanks!)';
+
+        const output = await signMessage(wallet, payload);
+
+        setSiws({ input: payload, output });
+      }
+
       const userData = await getUserData(wallet.publicKey.toString());
-      console.log({ userData });
+
       setAudiences(userData.audiences);
       setOffers(userData.offers);
 
@@ -144,6 +145,7 @@ export default function Home() {
                 <OfferTab
                   isMobile={isMobile}
                   siws={siws}
+                  authType={authType}
                   fetching={fetching}
                   offers={offers}
                 />
