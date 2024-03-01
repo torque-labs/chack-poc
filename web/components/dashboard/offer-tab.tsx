@@ -1,6 +1,13 @@
 'use client';
 
-import { Box, Flex, Button, useBreakpointValue, VStack, Skeleton } from '@chakra-ui/react';
+import {
+  Box,
+  Flex,
+  Button,
+  useBreakpointValue,
+  VStack,
+  Skeleton,
+} from '@chakra-ui/react';
 import { ChevronLeftIcon, ChevronRightIcon } from '@chakra-ui/icons';
 import React, { useState } from 'react';
 import Offer from './offer';
@@ -56,16 +63,20 @@ export const scrollerStyle = {
   },
 };
 
-export default function OfferTab({siws, fetching, offers}:any) {
+export default function OfferTab({ siws, fetching, offers, authType }: any) {
   const [currentOfferIndex, setCurrentOfferIndex] = useState(0);
 
   const nextOffer = () => {
-    if (offers.length <= 1) {return;}
+    if (offers.length <= 1) {
+      return;
+    }
     setCurrentOfferIndex((prevIndex) => (prevIndex + 1) % offers.length);
   };
 
   const prevOffer = () => {
-    if (offers.length <= 1) {return;}
+    if (offers.length <= 1) {
+      return;
+    }
     setCurrentOfferIndex(
       (prevIndex) => (prevIndex - 1 + offers.length) % offers.length
     );
@@ -76,7 +87,7 @@ export default function OfferTab({siws, fetching, offers}:any) {
 
   return fetching ? (
     <VStack justifyContent={'space-around'}>
-      <Skeleton border={'1px solid #14F195'} width={'320px'} height={'470px'}/>
+      <Skeleton border={'1px solid #14F195'} width={'320px'} height={'470px'} />
     </VStack>
   ) : (
     <Flex
@@ -94,9 +105,9 @@ export default function OfferTab({siws, fetching, offers}:any) {
           Prev
         </Button>
       )}
-      {offers?.length > 0 && 
-        <Offer {...offers[currentOfferIndex]} siws={siws}/>
-      }
+      {offers?.length > 0 && (
+        <Offer {...offers[currentOfferIndex]} siws={siws} authType={authType} />
+      )}
       {offers?.length > 0 && !isMobile && (
         <Button
           onClick={nextOffer}
@@ -107,7 +118,7 @@ export default function OfferTab({siws, fetching, offers}:any) {
         </Button>
       )}
       {offers?.length > 0 && isMobile && (
-        <Flex width="100%" justifyContent="center" >
+        <Flex width="100%" justifyContent="center">
           <Button
             onClick={prevOffer}
             leftIcon={<ChevronLeftIcon />}
@@ -124,9 +135,9 @@ export default function OfferTab({siws, fetching, offers}:any) {
           </Button>
         </Flex>
       )}
-      {offers?.length === 0 &&
+      {offers?.length === 0 && (
         <p>Your wallet does qualify for any offers :(</p>
-      }
+      )}
     </Flex>
   );
 }
